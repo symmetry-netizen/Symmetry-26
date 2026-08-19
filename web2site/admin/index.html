@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Symmetry '26</title>
+    
+    <!-- Importing fonts to match the design (Serif for titles, Sans-serif for labels) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Link to your CSS -->
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+    <!-- Decorative Background Elements -->
+    <div class="bg-grid"></div>
+    <div class="bg-circles"></div>
+    
+    <!-- Decorative Math Equations -->
+    <div class="math-eq eq-left"><i>e<sup>i&pi;</sup> + 1 = 0</i></div>
+    <div class="math-eq eq-right"><i>&int;<sub>a</sub><sup>b</sup> f(x) dx</i></div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        
+        <div class="header">
+        <div class="logo">S</div>
+        <img src="../images/branding/image.svg" alt="Symmetry Logo" class="svg-title">
+        <p class="subtitle">Presidency University, Kolkata</p>
+        </div>
+
+        <!-- Form (To be connected to Firebase Auth) -->
+        <form id="adminLoginForm">
+            <div class="input-group">
+                <label for="adminEmail">Administrator Email</label>
+                <input type="email" id="adminEmail" placeholder="admin@symmetry.edu" required>
+            </div>
+
+            <div class="input-group">
+                <label for="adminPassword">Secure Passcode</label>
+                <input type="password" id="adminPassword" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                SIGN IN 
+                <span class="arrow">&#x2197;</span> <!-- Unicode arrow -->
+            </button>
+        </form>
+
+        <div class="footer-links">
+            <a href="index.html">Back to Site</a>
+        </div>
+
+    </div>
+
+</body>
+
+
+
+<!-- Firebase SDK Setup -->
+<script type="module">
+    // 1. Import Firebase Core and Firestore
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    // 2. Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJj_i5y0GCUL5jnBMTTCm-fS8Ic5W74F0",
+        authDomain: "symmetry-505819.firebaseapp.com",
+        projectId: "symmetry-505819",
+        storageBucket: "symmetry-505819.firebasestorage.app",
+        messagingSenderId: "598103005832",
+        appId: "1:598103005832:web:047c15a1494a582e2f5d3d"
+    };
+
+    // 3. Initialize Firebase and Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app, "symmetry")
+
+    // 4. Handle the Login Form Submission
+    const loginForm = document.getElementById('adminLoginForm');
+    
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+
+        const inputEmail = document.getElementById('adminEmail').value.trim();
+        const inputPassword = document.getElementById('adminPassword').value.trim();
+        
+        const btn = document.querySelector('.login-btn');
+        btn.innerHTML = 'VERIFYING...';
+
+        try {
+            // 5. Query Firestore for a document matching BOTH the email and password
+            const credentialsRef = collection(db, "admin_credentials");
+            const q = query(credentialsRef, 
+                where("email", "==", inputEmail),
+                where("passcode", "==", inputPassword)
+            );
+
+            const querySnapshot = await getDocs(q);
+
+            // 6. Check if a match was found
+            if (!querySnapshot.empty) {
+                // Match found!
+                console.log("Credentials verified!");
+                
+                // Set a simple local storage flag so admin.html knows they logged in
+                localStorage.setItem("symmetry_admin_auth", "true");
+                
+                // Redirect to dashboard
+                window.location.href = "dashboard.html";
+            } else {
+                // No match found
+                alert("Invalid email or passcode.");
+                btn.innerHTML = 'SIGN IN <span class="arrow">&#x2197;</span>';
+            }
+        } catch (error) {
+            console.error("Error querying database:", error);
+            alert("Connection error. Please try again.");
+            btn.innerHTML = 'SIGN IN <span class="arrow">&#x2197;</span>';
+        }
+    });
+</script>
+</html>

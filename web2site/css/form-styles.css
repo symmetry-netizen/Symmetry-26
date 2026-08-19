@@ -1,0 +1,244 @@
+/* =========================================================
+   FORM / REGISTRATION-PAGE STYLES
+   Extends styles.css — uses the same design tokens
+   (--black, --paper, --accent, --gold, --serif, --sans, --line, --muted)
+   Load this AFTER styles.css.
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   FORM MESSAGE (status banner for forms)
+--------------------------------------------------------- */
+
+.form-message {
+    display: none;
+
+    padding: 13px 15px;
+    margin-bottom: 20px;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.form-message.success {
+    display: block;
+
+    background: #e4f1e6;
+    color: #245b31;
+    border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+    display: block;
+
+    background: #f3dde1;
+    color: var(--accent);
+    border: 1px solid #e3b8c1;
+}
+
+
+/* ---------------------------------------------------------
+   SUBMIT BUTTON LOADING STATE
+--------------------------------------------------------- */
+
+.submit-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTRATION PAGE — HERO / HEADING BLOCK
+--------------------------------------------------------- */
+
+.register-hero {
+    padding-top: 170px;
+    border-bottom: 1px solid var(--line);
+}
+
+.register-hero-container {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.register-hero-copy {
+    max-width: 700px;
+}
+
+.register-hero-copy .section-side-note {
+    max-width: 620px;
+    margin-top: 22px;
+}
+
+/* Graph + anagram, pinned to the right-hand edge of the container */
+.register-hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 100%;
+}
+
+/* Static placement here — no rotation animation on this page */
+.register-hero-visual .hero-graph img {
+    animation: none;
+}
+
+
+/* ---------------------------------------------------------
+   INFO POINTS
+   (registration-points, restyled for light backgrounds)
+--------------------------------------------------------- */
+
+.info-points {
+    display: grid;
+    gap: 0;
+
+    margin-top: 10px;
+
+    border-top: 1px solid var(--line);
+}
+
+.info-points > div {
+    display: grid;
+    grid-template-columns: 45px 1fr;
+    gap: 20px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.info-points span {
+    color: var(--accent);
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.info-points p {
+    margin: 0;
+    color: var(--black);
+}
+
+.info-points p em {
+    color: var(--muted);
+    font-style: normal;
+}
+
+
+/* ---------------------------------------------------------
+   STEP-BY-STEP GUIDE
+--------------------------------------------------------- */
+
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    margin: 40px 0;
+}
+
+.step-block {
+    background: var(--white);
+
+    padding: 30px;
+
+    border: 1px solid var(--line);
+
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.step-block:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+}
+
+.step-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+.step-number {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--accent);
+}
+
+.step-block h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.step-block p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.step-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+
+    margin: 14px 0;
+
+    border: 1px solid var(--line);
+}
+
+
+/* ---------------------------------------------------------
+   SIMPLE TEXT LIST (payment methods, ordered guide)
+--------------------------------------------------------- */
+
+.plain-list {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.plain-list li::marker {
+    color: var(--accent);
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 1050px) {
+    .register-hero-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .register-hero-visual {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 760px) {
+    .register-hero {
+        padding-top: 130px;
+    }
+
+    .step-block {
+        padding: 22px;
+    }
+
+    .register-hero-visual .hero-symmetry {
+        width: min(72vw, 19rem);
+    }
+
+    .register-hero-visual .hero-graph {
+        width: 4rem;
+        height: 4rem;
+    }
+}

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .node { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+      .edge { stroke: #2c3e50; stroke-width: 1.5; fill: none; }
+      .node:hover { fill: #c0392b; }
+    </style>
+  </defs>
+  
+  <!-- Edges (connections) -->
+  <!-- Outer octagon connections -->
+  <line class="edge" x1="100" y1="20" x2="120" y2="40"/>
+  <line class="edge" x1="120" y1="40" x2="140" y2="60"/>
+  <line class="edge" x1="140" y1="60" x2="140" y2="80"/>
+  <line class="edge" x1="140" y1="80" x2="120" y2="100"/>
+  <line class="edge" x1="120" y1="100" x2="100" y2="120"/>
+  <line class="edge" x1="100" y1="120" x2="80" y2="100"/>
+  <line class="edge" x1="80" y1="100" x2="60" y2="80"/>
+  <line class="edge" x1="60" y1="80" x2="60" y2="60"/>
+  <line class="edge" x1="60" y1="60" x2="80" y2="40"/>
+  <line class="edge" x1="80" y1="40" x2="100" y2="20"/>
+  
+  <!-- Outer octagon star pattern -->
+  <line class="edge" x1="100" y1="20" x2="140" y2="60"/>
+  <line class="edge" x1="100" y1="20" x2="60" y2="60"/>
+  <line class="edge" x1="120" y1="40" x2="140" y2="80"/>
+  <line class="edge" x1="120" y1="40" x2="80" y2="40"/>
+  <line class="edge" x1="140" y1="60" x2="120" y2="100"/>
+  <line class="edge" x1="140" y1="60" x2="100" y2="120"/>
+  <line class="edge" x1="140" y1="80" x2="80" y2="100"/>
+  <line class="edge" x1="140" y1="80" x2="60" y2="60"/>
+  <line class="edge" x1="120" y1="100" x2="60" y2="80"/>
+  <line class="edge" x1="120" y1="100" x2="80" y2="40"/>
+  <line class="edge" x1="100" y1="120" x2="60" y2="60"/>
+  <line class="edge" x1="100" y1="120" x2="80" y2="40"/>
+  <line class="edge" x1="80" y1="100" x2="60" y2="60"/>
+  <line class="edge" x1="80" y1="100" x2="100" y2="20"/>
+  <line class="edge" x1="60" y1="80" x2="80" y2="40"/>
+  <line class="edge" x1="60" y1="80" x2="120" y2="40"/>
+  <line class="edge" x1="60" y1="60" x2="100" y2="20"/>
+  <line class="edge" x1="60" y1="60" x2="140" y2="60"/>
+  <line class="edge" x1="80" y1="40" x2="140" y2="80"/>
+  <line class="edge" x1="80" y1="40" x2="120" y2="100"/>
+  
+  <!-- Middle octagon connections -->
+  <line class="edge" x1="110" y1="50" x2="125" y2="65"/>
+  <line class="edge" x1="125" y1="65" x2="130" y2="85"/>
+  <line class="edge" x1="130" y1="85" x2="115" y2="105"/>
+  <line class="edge" x1="115" y1="105" x2="95" y2="105"/>
+  <line class="edge" x1="95" y1="105" x2="80" y2="85"/>
+  <line class="edge" x1="80" y1="85" x2="85" y2="65"/>
+  <line class="edge" x1="85" y1="65" x2="100" y2="50"/>
+  <line class="edge" x1="100" y1="50" x2="110" y2="50"/>
+  
+  <!-- Middle octagon star pattern -->
+  <line class="edge" x1="110" y1="50" x2="130" y2="85"/>
+  <line class="edge" x1="110" y1="50" x2="80" y2="85"/>
+  <line class="edge" x1="125" y1="65" x2="115" y2="105"/>
+  <line class="edge" x1="125" y1="65" x2="85" y2="65"/>
+  <line class="edge" x1="130" y1="85" x2="95" y2="105"/>
+  <line class="edge" x1="130" y1="85" x2="100" y2="50"/>
+  <line class="edge" x1="115" y1="105" x2="85" y2="65"/>
+  <line class="edge" x1="115" y1="105" x2="110" y2="50"/>
+  <line class="edge" x1="95" y1="105" x2="85" y2="65"/>
+  <line class="edge" x1="95" y1="105" x2="125" y2="65"/>
+  <line class="edge" x1="80" y1="85" x2="100" y2="50"/>
+  <line class="edge" x1="80" y1="85" x2="130" y2="85"/>
+  <line class="edge" x1="85" y1="65" x2="115" y2="105"/>
+  <line class="edge" x1="85" y1="65" x2="95" y2="105"/>
+  <line class="edge" x1="100" y1="50" x2="130" y2="85"/>
+  <line class="edge" x1="100" y1="50" x2="80" y2="85"/>
+  
+  <!-- Central square connections -->
+  <line class="edge" x1="105" y1="75" x2="115" y2="75"/>
+  <line class="edge" x1="115" y1="75" x2="115" y2="85"/>
+  <line class="edge" x1="115" y1="85" x2="105" y2="85"/>
+  <line class="edge" x1="105" y1="85" x2="105" y2="75"/>
+  
+  <!-- Connections between layers -->
+  <!-- Outer to Middle -->
+  <line class="edge" x1="100" y1="20" x2="110" y2="50"/>
+  <line class="edge" x1="100" y1="20" x2="100" y2="50"/>
+  <line class="edge" x1="120" y1="40" x2="125" y2="65"/>
+  <line class="edge" x1="120" y1="40" x2="110" y2="50"/>
+  <line class="edge" x1="140" y1="60" x2="130" y2="85"/>
+  <line class="edge" x1="140" y1="60" x2="125" y2="65"/>
+  <line class="edge" x1="140" y1="80" x2="115" y2="105"/>
+  <line class="edge" x1="140" y1="80" x2="130" y2="85"/>
+  <line class="edge" x1="120" y1="100" x2="95" y2="105"/>
+  <line class="edge" x1="120" y1="100" x2="115" y2="105"/>
+  <line class="edge" x1="100" y1="120" x2="80" y2="85"/>
+  <line class="edge" x1="100" y1="120" x2="95" y2="105"/>
+  <line class="edge" x1="80" y1="100" x2="85" y2="65"/>
+  <line class="edge" x1="80" y1="100" x2="80" y2="85"/>
+  <line class="edge" x1="60" y1="80" x2="100" y2="50"/>
+  <line class="edge" x1="60" y1="80" x2="85" y2="65"/>
+  <line class="edge" x1="60" y1="60" x2="110" y2="50"/>
+  <line class="edge" x1="60" y1="60" x2="100" y2="50"/>
+  <line class="edge" x1="80" y1="40" x2="125" y2="65"/>
+  <line class="edge" x1="80" y1="40" x2="110" y2="50"/>
+  
+  <!-- Middle to Central -->
+  <line class="edge" x1="110" y1="50" x2="105" y2="75"/>
+  <line class="edge" x1="110" y1="50" x2="115" y2="75"/>
+  <line class="edge" x1="125" y1="65" x2="105" y2="75"/>
+  <line class="edge" x1="125" y1="65" x2="115" y2="75"/>
+  <line class="edge" x1="130" y1="85" x2="105" y2="85"/>
+  <line class="edge" x1="130" y1="85" x2="115" y2="85"/>
+  <line class="edge" x1="115" y1="105" x2="105" y2="85"/>
+  <line class="edge" x1="115" y1="105" x2="115" y2="85"/>
+  <line class="edge" x1="95" y1="105" x2="105" y2="75"/>
+  <line class="edge" x1="95" y1="105" x2="115" y2="75"/>
+  <line class="edge" x1="80" y1="85" x2="105" y2="75"/>
+  <line class="edge" x1="80" y1="85" x2="105" y2="85"/>
+  <line class="edge" x1="85" y1="65" x2="105" y2="75"/>
+  <line class="edge" x1="85" y1="65" x2="115" y2="75"/>
+  <line class="edge" x1="100" y1="50" x2="105" y2="75"/>
+  <line class="edge" x1="100" y1="50" x2="115" y2="75"/>
+  
+  <!-- Nodes -->
+  <!-- Outer octagon nodes -->
+  <circle class="node" cx="100" cy="20" r="4"/>
+  <circle class="node" cx="120" cy="40" r="4"/>
+  <circle class="node" cx="140" cy="60" r="4"/>
+  <circle class="node" cx="140" cy="80" r="4"/>
+  <circle class="node" cx="120" cy="100" r="4"/>
+  <circle class="node" cx="100" cy="120" r="4"/>
+  <circle class="node" cx="80" cy="100" r="4"/>
+  <circle class="node" cx="60" cy="80" r="4"/>
+  <circle class="node" cx="60" cy="60" r="4"/>
+  <circle class="node" cx="80" cy="40" r="4"/>
+  
+  <!-- Middle octagon nodes -->
+  <circle class="node" cx="110" cy="50" r="4"/>
+  <circle class="node" cx="125" cy="65" r="4"/>
+  <circle class="node" cx="130" cy="85" r="4"/>
+  <circle class="node" cx="115" cy="105" r="4"/>
+  <circle class="node" cx="95" cy="105" r="4"/>
+  <circle class="node" cx="80" cy="85" r="4"/>
+  <circle class="node" cx="85" cy="65" r="4"/>
+  <circle class="node" cx="100" cy="50" r="4"/>
+  
+  <!-- Central square nodes -->
+  <circle class="node" cx="105" cy="75" r="4"/>
+  <circle class="node" cx="115" cy="75" r="4"/>
+  <circle class="node" cx="115" cy="85" r="4"/>
+  <circle class="node" cx="105" cy="85" r="4"/>
+</svg>
