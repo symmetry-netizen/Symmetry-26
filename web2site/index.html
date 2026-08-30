@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Backup HTML Redirect -->
+  <meta http-equiv="refresh" content="0; url=./html/index.html">
+  
+  <title>Symmetry '25</title>
+  
+  <style>
+    body {
+      background-color: #F5F2E9; 
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #fallback-message {
+      display: none;
+      color: #333333;
+      text-align: center;
+    }
+
+    #fallback-message a {
+      color: #000000;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fallback-message">
+    <p>Loading... If you are not redirected automatically, <a href="./html/index.html">click here</a>.</p>
+  </div>
+
+  <script>
+    window.location.replace("./html/index.html");
+
+    setTimeout(function() {
+      document.getElementById('fallback-message').style.display = 'block';
+    }, 2500);
+  </script>
+
+</body>
+</html>
