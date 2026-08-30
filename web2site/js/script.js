@@ -1748,6 +1748,12 @@ async function submitContactQuery(form) {
     const message = document.getElementById("formMessage");
     const button = document.getElementById("querySubmit");
     const formData = new FormData(form);
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const subject = formData.get("subject");
+    const userMessage = formData.get("message");
+
     if (!name || !email || !subject || !userMessage) {
         showMessage(
             message,
