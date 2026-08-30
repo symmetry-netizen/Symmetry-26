@@ -189,10 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value);
 
-        // CONFLICT CHECK: Inquisition vs Sudoku
-        if (selectedEvents.includes("Inquisition") && selectedEvents.includes("Sudoku")) {
+        // CONFLICT CHECK: Re-Presentation vs Sudoku
+        if (selectedEvents.includes("Re-Presentation") && selectedEvents.includes("Sudoku")) {
             
-            alert("⚠️ You cannot participate in both Inquisition and Crack the Grid (Sudoku) at the same time. Please choose only one.");
+            alert("⚠️ You cannot participate in both Re-Presentation and Crack the Grid (Sudoku) at the same time. Please choose only one.");
             
             // Force the box they just clicked to uncheck
             if (clickedBox) {
