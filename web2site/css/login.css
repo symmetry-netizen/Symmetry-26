@@ -1,0 +1,234 @@
+/* --- CSS RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7f5ee; /* Matches the warm beige */
+    color: #2c2c2c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- DECORATIVE BACKGROUNDS --- */
+
+/* Faint Grid Lines */
+.bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: clamp(100px, 15vw, 200px) clamp(100px, 15vw, 200px);
+    background-position: center center;
+}
+
+/* Faint Concentric Circles */
+.bg-circles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-circles::before, .bg-circles::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.bg-circles::before {
+    width: 500px;
+    height: 500px;
+}
+
+.bg-circles::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Faint Math Equations */
+.math-eq {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 1.1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.eq-left {
+    top: 25%;
+    left: 15%;
+}
+
+.eq-right {
+    bottom: 25%;
+    right: 15%;
+}
+
+/* --- MAIN LOGIN CONTAINER --- */
+.login-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 380px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.header {
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    background: #111111; 
+    color: #ffffff;      
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 23px;
+    
+    margin: 0 auto -50px auto; 
+    
+    position: relative;
+    z-index: 5; 
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #555;
+}
+
+/* --- FORM ELEMENTS --- */
+form {
+    text-align: left;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #2c2c2c;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #333;
+}
+
+.arrow {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* --- FOOTER LINKS --- */
+.footer-links {
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.footer-links a {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #555;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.footer-links {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center; 
+    padding: 0 10px;
+}
+
+/* --- SVG Logo Styling --- */
+.svg-title {
+    width: 220px;
+    height: auto;
+    margin: -20px auto 10px auto; /* Negative top margin pulls it up slightly */
+    display: block;
+    position: relative;
+    z-index: 1;
+}

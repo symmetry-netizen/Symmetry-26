@@ -1,0 +1,130 @@
+/* =========================================================
+   COOKIE CONSENT — "Let's keep this symmetric."
+
+   Self-contained, like footer.css and legal.css: every
+   var() has a fallback so this renders correctly even on
+   pages (form.html, event.html, cookie-policy.html) that
+   don't load styles.css and therefore never define
+   --black, --gold-soft, --shadow, --transition, etc.
+   ========================================================= */
+
+.cookie-consent {
+    position: fixed;
+    left: 50%;
+    bottom: -220px;
+    z-index: 2000;
+
+    width: calc(100% - 48px);
+    max-width: 400px;
+
+    background: var(--black, #191410);
+    border: 1px solid rgba(212, 180, 106, 0.22);
+    border-radius: 22px;
+    box-shadow: var(--shadow, 0 20px 60px rgba(0, 0, 0, 0.35));
+
+    padding: 28px 28px 22px;
+
+    opacity: 0;
+    transform: translate(-50%, 24px);
+    transition:
+        opacity var(--transition, 260ms cubic-bezier(.2,.7,.2,1)),
+        transform var(--transition, 260ms cubic-bezier(.2,.7,.2,1)),
+        bottom var(--transition, 260ms cubic-bezier(.2,.7,.2,1));
+}
+
+.cookie-consent.visible {
+    bottom: 28px;
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.cookie-consent-glyph {
+    display: block;
+    font-family: var(--serif, "Instrument Serif", Georgia, serif);
+    font-size: 1.3rem;
+    color: var(--gold-soft, #d4b46a);
+    margin-bottom: 8px;
+
+    transform: rotate(-90deg) scale(0.6);
+    opacity: 0;
+    transition: transform 500ms cubic-bezier(.34, 1.56, .64, 1) 150ms,
+                opacity 400ms ease 150ms;
+}
+
+.cookie-consent.visible .cookie-consent-glyph {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+.cookie-consent-inner h3 {
+    font-family: var(--serif, "Instrument Serif", Georgia, serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--paper, #f6f1e6);
+    margin: 0 0 12px;
+}
+
+.cookie-consent-inner p {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgba(246, 241, 230, 0.72);
+    margin: 0 0 22px;
+}
+
+.cookie-consent-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cookie-btn-accept {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--paper, #f6f1e6);
+    background: var(--accent, #7a1f30);
+    border: none;
+    border-radius: 999px;
+    padding: 11px 26px;
+    cursor: pointer;
+    transition: var(--transition, 260ms cubic-bezier(.2,.7,.2,1));
+}
+
+.cookie-btn-accept:hover {
+    background: var(--accent-soft, #a5445a);
+}
+
+.cookie-btn-decline {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(246, 241, 230, 0.62);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(246, 241, 230, 0.3);
+    transition: color var(--transition, 260ms cubic-bezier(.2,.7,.2,1));
+}
+
+.cookie-btn-decline:hover {
+    color: var(--paper, #f6f1e6);
+}
+
+@media (max-width: 560px) {
+    .cookie-consent {
+        left: 12px;
+        width: calc(100% - 24px);
+        max-width: none;
+        transform: translateY(24px);
+    }
+
+    .cookie-consent.visible {
+        transform: translateY(0);
+    }
+}

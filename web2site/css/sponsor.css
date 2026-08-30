@@ -1,0 +1,163 @@
+/* --- Base Variables (assuming these match your main styles) --- */
+
+
+
+
+/* 1. Make the header solid and keep it on top of everything */
+.site-header {
+    background-color: #f4f0e9 !important; /* Forces the cream background */
+    z-index: 9999; /* Ensures it stays above all scrolling text and images */
+}
+
+/* 2. Push the main content down so it clears the fixed header */
+.sponsor-hero {
+    /* 150px is usually a safe bet for headers, but increase it if you want more breathing room! */
+    padding-top: 150px; 
+}
+
+:root {
+    --bg-color: #f4ece1; /* Cream background */
+    --text-primary: #111111;
+    --text-accent: #7b1e2b; /* Dark red/burgundy */
+    --grid-line: rgba(0, 0, 0, 0.05); /* Faint background grid */
+}
+
+.sponsor-page {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    padding: 120px 5% 80px;
+    font-family: 'DM Sans', sans-serif; /* Fallback sans */
+    
+    /* Optional: To mimic the faint grid background on your event page */
+    background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
+
+/* --- Hero Section --- */
+.sponsor-hero {
+    max-width: 1200px;
+    margin: 0 auto 100px;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif; /* Or your specific serif font */
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+}
+
+.text-accent {
+    color: var(--text-accent);
+    font-style: italic; /* Mimics the "Create." styling */
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    max-width: 600px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* --- Sponsor Tiers Layout --- */
+.sponsor-tier {
+    max-width: 1200px;
+    margin: 0 auto 120px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 40px;
+}
+
+/* Section Labels (Matches the "01 VISUAL MATHEMATICS" style) */
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.label-number {
+    color: var(--text-accent);
+}
+
+.label-text {
+    color: #777;
+}
+
+/* --- Specific Tier Styling --- */
+.primary-sponsor-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.poster-placeholder {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4/5;
+    background: #eae6db; /* Slightly darker cream for placeholder */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.sponsor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+}
+
+/* --- Grid Systems for Logos --- */
+.logo-grid {
+    display: grid;
+    gap: 32px;
+}
+
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+.sponsor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.logo-placeholder {
+    width: 100%;
+    aspect-ratio: 3/2;
+    background: #eae6db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-placeholder:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Split tier for Supporting and Gifting */
+.tier-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+}
+
+@media (max-width: 768px) {
+    .tier-split {
+        grid-template-columns: 1fr;
+    }
+}

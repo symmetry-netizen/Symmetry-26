@@ -1,0 +1,111 @@
+/* =========================================================
+   LEGAL PAGES (Cookie Policy, License)
+   Self-contained — does not depend on styles.css.
+========================================================= */
+
+.legal-page {
+    min-height: 100vh;
+    background: var(--paper, #f6f1e6);
+    color: var(--black, #191410);
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    line-height: 1.65;
+}
+
+.legal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid rgba(25, 20, 16, 0.14);
+}
+
+.legal-brand {
+    font-family: var(--serif, "Instrument Serif", Georgia, serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--black, #191410);
+    text-decoration: none;
+}
+
+.legal-back {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.85rem;
+    color: var(--accent, #7a1f30);
+    text-decoration: none;
+}
+
+.legal-back:hover {
+    text-decoration: underline;
+}
+
+.legal-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 90px) clamp(20px, 5vw, 64px) 100px;
+}
+
+.legal-content .eyebrow {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted, #766b57);
+    margin-bottom: 12px;
+}
+
+.legal-content h1 {
+    font-family: var(--serif, "Instrument Serif", Georgia, serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0 0 20px;
+}
+
+.legal-content h2 {
+    font-family: var(--serif, "Instrument Serif", Georgia, serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 48px 0 14px;
+}
+
+.legal-content p {
+    font-size: 1rem;
+    color: rgba(25, 20, 16, 0.82);
+    margin: 0 0 18px;
+}
+
+.legal-content a {
+    color: var(--accent, #7a1f30);
+}
+
+.legal-manage-btn {
+    font-family: var(--sans, "DM Sans", Arial, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--paper, #f6f1e6);
+    background: var(--accent, #7a1f30);
+    border: none;
+    border-radius: 999px;
+    padding: 13px 28px;
+    cursor: pointer;
+    transition: var(--transition, 260ms cubic-bezier(.2,.7,.2,1));
+}
+
+.legal-manage-btn:hover {
+    background: var(--accent-soft, #a5445a);
+}
+
+pre.legal-license-text {
+    background: rgba(25, 20, 16, 0.04);
+    border: 1px solid rgba(25, 20, 16, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: rgba(25, 20, 16, 0.85);
+    overflow-x: auto;
+}
