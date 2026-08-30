@@ -255,20 +255,17 @@ function renderAnalytics() {
 
 
 /* =========================================================
-   PARTICIPANTS TABLE
+   PARTICIPANT FILTERING LOGIC
 ========================================================= */
 
-function renderParticipants() {
-
-    const table = document.getElementById("participantTable");
-
+function getFilteredParticipants() {
     const search = document
         .getElementById("participantSearch")
         .value
         .trim()
         .toLowerCase();
 
-    const filtered = participants.filter(participant => {
+    return participants.filter(participant => {
 
         // AND logic: every currently-selected event tab must be
         // true for this participant. Empty selection = show all.
@@ -283,6 +280,20 @@ function renderParticipants() {
         return matchesEvents && matchesSearch;
 
     });
+}
+
+
+
+/* =========================================================
+   PARTICIPANTS TABLE
+========================================================= */
+
+function renderParticipants() {
+
+    const table = document.getElementById("participantTable");
+    
+    // Retrieve the currently filtered list
+    const filtered = getFilteredParticipants();
 
     table.innerHTML = "";
 
@@ -400,6 +411,76 @@ document
 document
     .getElementById("participantSearch")
     .addEventListener("input", renderParticipants);
+
+
+
+/* =========================================================
+   CSV EXPORT LOGIC
+========================================================= */
+
+function convertToCSV(data) {
+    const headers = [
+        "Registration ID", "Name", "Email", "Year", "Department",
+        "Institute", "Food Preference", "Entropy", "Inquisition",
+        "Overflow", "Predicta", "Recursion", "Re-Presentation",
+        "Crack the Grid", "Entropy File", "Recursion File",
+        "Re-Presentation File", "Payment File", "Status", "Submitted"
+    ];
+
+    const rows = data.map(p => {
+        // Map raw boolean values to Yes/No for cleaner CSV reading
+        return [
+            p.registration_id || "—",
+            p.name || "—",
+            p.email || "—",
+            p.year || "—",
+            p.department || "—",
+            p.institute || "—",
+            p.food_preference || "—",
+            p.event_entropy ? "Yes" : "No",
+            p.event_inquisition ? "Yes" : "No",
+            p.event_overflow ? "Yes" : "No",
+            p.event_predicta ? "Yes" : "No",
+            p.event_recursion ? "Yes" : "No",
+            p.event_representation ? "Yes" : "No",
+            p.event_sudoku ? "Yes" : "No",
+            p.file_entropy || "—",
+            p.file_recursion || "—",
+            p.file_representation || "—",
+            p.file_payment || "—",
+            p.status || "—",
+            p.timestamp ? new Date(p.timestamp).toLocaleString() : "—"
+        ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(","); // Escape quotes to prevent CSV breakage
+    });
+
+    return [headers.join(","), ...rows].join("\n");
+}
+
+document.getElementById("downloadCSV")?.addEventListener("click", () => {
+    // 1. Get whatever is currently filtered by tabs and search
+    const currentData = getFilteredParticipants(); 
+    
+    if (currentData.length === 0) {
+        alert("No participants match the current filters.");
+        return;
+    }
+
+    // 2. Convert to CSV format
+    const csvString = convertToCSV(currentData);
+    
+    // 3. Create a downloadable blob
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    
+    // 4. Trigger the download automatically
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `Symmetry_Participants_${new Date().toISOString().slice(0,10)}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
 
 
 
