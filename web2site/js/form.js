@@ -567,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const activeEmail = localStorage.getItem("symmetry2026_email");
                 const activeName = localStorage.getItem("symmetry2026_name");
                 const docId = localStorage.getItem("symmetry2026_docId");
-                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6NgmXBTb5J3UEdy30YOY5Hv6irSFNY5XsAboM3AYOHpuYXZhqmobMlGac6MJZtMgX/exec";
+                const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVjnGrjKdq2vKdiqnjYR1byO5n38v4h3RCL8_wGBYZsEjituQZZO7JiDDzGA5fz4S9/exec";
 
                 try {
                     const response = await fetch(GOOGLE_SCRIPT_URL, {
