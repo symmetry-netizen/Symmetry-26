@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+    const isAuthenticated = localStorage.getItem("symmetry_admin_auth");
+    if (isAuthenticated !== "true") {
+        window.location.replace("index.html");
+    }
+    </script>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Symmetry — Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BRAND
+========================================================= -->
+
+<header class="admin-header">
+
+    <img
+        src="../images/branding/image.svg"
+        alt="Symmetry"
+        class="admin-logo"
+    >
+
+</header>
+
+
+
+<!-- =========================================================
+     ADMIN LAYOUT
+========================================================= -->
+
+<div class="admin-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <button
+            class="nav-item active"
+            data-page="dashboard"
+        >
+            Dashboard
+        </button>
+
+        <button
+            class="nav-item"
+            data-page="participants"
+        >
+            Participants
+        </button>
+
+        <button
+            class="nav-item"
+            data-page="queries"
+        >
+            Queries
+            <span
+                class="query-count"
+                id="queryCount"
+            >
+                0
+            </span>
+        </button>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+            id="dashboard"
+            class="admin-page active"
+        >
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Overview
+                    </h1>
+
+                </div>
+
+                <button
+                    class="refresh-button"
+                    id="refreshDashboard"
+                >
+                    Refresh ↻
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span>Total participants</span>
+
+                    <strong id="totalParticipants">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>Total registrations</span>
+
+                    <strong id="totalRegistrations">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>Events</span>
+
+                    <strong id="totalEvents">
+                        7
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EVENT ANALYTICS -->
+
+            <div class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            PROGRAMMES
+                        </span>
+
+                        <h2>
+                            Event analytics
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="event-analytics"
+                    id="eventAnalytics"
+                >
+
+                    <div class="loading">
+                        Loading analytics...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PARTICIPANTS
+        ================================================== -->
+
+        <section
+            id="participants"
+            class="admin-page"
+        >
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        REGISTRATIONS
+                    </span>
+
+                    <h1>
+                        Participants
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="event-tabs">
+
+                <button
+                    class="event-tab active"
+                    data-event="all"
+                >
+                    All
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="entropy"
+                >
+                    Entropy
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="inquisition"
+                >
+                    Inquisition
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="sudoku"
+                >
+                    Crack the Grid
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="representation"
+                >
+                    Re-Presentation
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="recursion"
+                >
+                    Recursion
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="overflow"
+                >
+                    Overflow
+                </button>
+
+                <button
+                    class="event-tab"
+                    data-event="predicta"
+                >
+                    Predicta
+                </button>
+
+            </div>
+
+
+            <div class="participant-toolbar">
+
+                <input
+                    type="search"
+                    id="participantSearch"
+                    placeholder="Search participants by name..."
+                >
+
+            </div>
+
+
+            <div class="panel table-panel">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Registration ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Year</th>
+                            <th>Department</th>
+                            <th>Institute</th>
+                            <th>Food Preference</th>
+                            <th>Entropy</th>
+                            <th>Inquisition</th>
+                            <th>Overflow</th>
+                            <th>Predicta</th>
+                            <th>Recursion</th>
+                            <th>Re-Presentation</th>
+                            <th>Crack the Grid</th>
+                            <th>Entropy File</th>
+                            <th>Recursion File</th>
+                            <th>Re-Presentation File</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="participantTable"
+                    >
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUERIES
+        ================================================== -->
+
+        <section
+            id="queries"
+            class="admin-page"
+        >
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        COMMUNICATION
+                    </span>
+
+                    <h1>
+                        Queries
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="query-layout"
+                id="queryList"
+            >
+
+                <div class="loading">
+                    Loading queries...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script type="module" src="../js/admin.js"></script>
+
+</body>
+
+</html>
