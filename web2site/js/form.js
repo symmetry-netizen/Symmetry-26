@@ -911,7 +911,7 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.style.opacity = "0.7";
 
             // Replace with your actual deployed Web App URL
-            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxf7Ocwf-JIE8lDYMGmueyAFRMQRBXJJ3pnuJSKJKZ75xtsdaRr_uihvGh2VveCdaTKoA/exec"; 
+            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVjnGrjKdq2vKdiqnjYR1byO5n38v4h3RCL8_wGBYZsEjituQZZO7JiDDzGA5fz4S9/exec"; 
 
             try {
                 // 1. Identify User State
