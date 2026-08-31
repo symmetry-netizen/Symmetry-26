@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -568,6 +567,20 @@
                     </label>
                     <p class="file-name" id="entropyFileName">No file selected</p>
                 </div>
+
+                <!-- ENTROPY PHOTO DESCRIPTION -->
+                <div class="form-group full-width" style="margin-top: 24px;">
+                    <label for="entropyDescription">
+                        Describe Your Photograph <span>*</span>
+                    </label>
+                    <textarea
+                        id="entropyDescription"
+                        name="entropyDescription"
+                        rows="6"
+                        placeholder="In up to 200 words, describe the story, concept or idea behind your photograph..."
+                    ></textarea>
+                    <p class="file-name" id="entropyDescriptionCount">0 / 200 words</p>
+                </div>
             </section>
 
             <!-- RECURSION UPLOAD -->
@@ -628,6 +641,19 @@
                         <input type="file" id="paymentFile" name="paymentFile" accept=".jpg,.png,.pdf">
                     </label>
                     <p class="file-name" id="paymentFileName">No file selected</p>
+                </div>
+
+                <!-- PAYMENT REFERENCE NUMBER -->
+                <div class="form-group full-width" style="margin-top: 24px;">
+                    <label for="paymentReference">
+                        Payment Reference No. <span>*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="paymentReference"
+                        name="paymentReference"
+                        placeholder="Enter the UTR / transaction reference number from your payment"
+                    >
                 </div>
             </section>
 
@@ -860,4 +886,3 @@
 
 </body>
 </html>
-
