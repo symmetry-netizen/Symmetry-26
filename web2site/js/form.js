@@ -129,6 +129,20 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("representationFile");
 
     const paymentFile = document.getElementById("paymentFile");
+
+    /* =====================================================
+       ENTROPY DESCRIPTION / PAYMENT REFERENCE NO.
+    ===================================================== */
+
+    const entropyDescription =
+        document.getElementById("entropyDescription");
+
+    const entropyDescriptionCount =
+        document.getElementById("entropyDescriptionCount");
+
+    const paymentReference =
+        document.getElementById("paymentReference");
+
     /* =====================================================
        FILE NAME DISPLAY
     ===================================================== */
@@ -291,6 +305,27 @@ document.addEventListener("DOMContentLoaded", () => {
         paymentFile,
         paymentFileName
     );
+
+    /* =====================================================
+       ENTROPY DESCRIPTION — LIVE WORD COUNTER
+    ===================================================== */
+
+    function countWords(text) {
+        const trimmed = (text || "").trim();
+        return trimmed ? trimmed.split(/\s+/).length : 0;
+    }
+
+    if (entropyDescription && entropyDescriptionCount) {
+
+        const updateEntropyWordCount = () => {
+            const words = countWords(entropyDescription.value);
+            entropyDescriptionCount.textContent = `${words} / 200 words`;
+            entropyDescriptionCount.style.color = words > 200 ? "#e11d48" : "";
+        };
+
+        entropyDescription.addEventListener("input", updateEntropyWordCount);
+        updateEntropyWordCount();
+    }
 
     /* =====================================================
        FILE EXTENSION VALIDATION
@@ -536,6 +571,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                if (filesToUpload.Entropy) {
+                    const pendingWords = countWords(entropyDescription.value);
+                    if (!entropyDescription.value.trim()) {
+                        alert("Please describe your Entropy photograph before submitting.");
+                        entropyDescription.focus();
+                        return;
+                    }
+                    if (pendingWords > 200) {
+                        alert(`Your Entropy description is ${pendingWords} words. Please keep it within 200 words.`);
+                        entropyDescription.focus();
+                        return;
+                    }
+                }
+
                 const extensionRules = {
                     Entropy: ["jpg", "jpeg", "png", "svg"],
                     Recursion: ["pdf"],
@@ -575,6 +624,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify({
                             participant: { name: activeName, email: activeEmail },
                             isReturningUser: true,
+                            entropy_description: filesToUpload.Entropy ? entropyDescription.value.trim() : undefined,
                             submissions: {
                                 entropy: pendingEntropyData,
                                 recursion: pendingRecursionData,
@@ -591,6 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (result.fileUrls.entropy) updatePayload.file_entropy = result.fileUrls.entropy;
                         if (result.fileUrls.recursion) updatePayload.file_recursion = result.fileUrls.recursion;
                         if (result.fileUrls.re_presentation) updatePayload.file_representation = result.fileUrls.re_presentation;
+                        if (filesToUpload.Entropy) updatePayload.entropy_description = entropyDescription.value.trim();
 
                         await updateDoc(doc(db, "participant_list", docId), updatePayload);
 
@@ -771,6 +822,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /* =============================================
+               7. VALIDATE ENTROPY DESCRIPTION
+            ============================================= */
+            if (selectedEvents.includes("Entropy")) {
+                const entropyWords = countWords(entropyDescription.value);
+
+                if (!entropyDescription.value.trim()) {
+                    alert("Please describe your Entropy photograph before submitting.");
+                    entropyDescription.focus();
+                    entropyDescription.scrollIntoView({ behavior: "smooth", block: "center" });
+                    return;
+                }
+
+                if (entropyWords > 200) {
+                    alert(`Your Entropy description is ${entropyWords} words. Please keep it within 200 words.`);
+                    entropyDescription.focus();
+                    entropyDescription.scrollIntoView({ behavior: "smooth", block: "center" });
+                    return;
+                }
+            }
+
+
+            /* =============================================
+               8. VALIDATE PAYMENT REFERENCE NUMBER
+            ============================================= */
+            const paymentReferenceValue = paymentReference.value.trim();
+
+            if (!paymentReferenceValue) {
+                alert("Please enter your payment reference number.");
+                paymentReference.focus();
+                paymentReference.scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+
+            /* =============================================
                9. CREATE UNIQUE REGISTRATION ID
             ============================================= */
 
@@ -871,6 +957,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 institute: institute,
                 food_preference: food,
 
+                // New fields
+                entropy_description: selectedEvents.includes("Entropy") ? entropyDescription.value.trim() : "",
+                payment_reference_no: paymentReferenceValue,
+
                 // Event Booleans (True/False)
                 event_entropy: selectedEvents.includes("Entropy"),
                 event_recursion: selectedEvents.includes("Recursion"),
@@ -938,6 +1028,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         isReturningUser: isReturningUser,
                         registration_id: !isReturningUser ? registrationID : undefined,
                         events: !isReturningUser ? selectedEvents : undefined,
+                        entropy_description: !isReturningUser ? (registrationData.entropy_description || "") : undefined,
+                        payment_reference_no: !isReturningUser ? paymentReferenceValue : undefined,
                         submissions: {
                             entropy: entropyData,
                             recursion: recursionData,
