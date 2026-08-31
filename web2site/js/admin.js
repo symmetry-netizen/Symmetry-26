@@ -139,6 +139,9 @@ function mapParticipant(docSnap) {
         file_representation: data.file_representation || null,
         file_payment: data.file_payment || null,
 
+        entropy_description: data.entropy_description || "",
+        payment_reference_no: data.payment_reference_no || "",
+
         status: data.status || "",
         timestamp: data.timestamp || null,
 
@@ -329,6 +332,7 @@ function renderParticipants() {
             <td>${eventMark(participant.event_representation)}</td>
             <td>${eventMark(participant.event_sudoku)}</td>
             <td>${fileLink(participant.file_entropy)}</td>
+            <td title="${escapeHTML(participant.entropy_description)}">${escapeHTML(participant.entropy_description) || "—"}</td>
             <td>${fileLink(participant.file_recursion)}</td>
             <td>${fileLink(participant.file_representation)}</td>
             <td class="${participant.file_payment ? "payment-paid" : "payment-pending"}">
@@ -338,6 +342,7 @@ function renderParticipants() {
                         : "Pending"
                 }
             </td>
+            <td>${escapeHTML(participant.payment_reference_no) || "—"}</td>
             <td>${escapeHTML(participant.status) || "—"}</td>
             <td>${escapeHTML(submitted)}</td>
         `;
@@ -423,8 +428,9 @@ function convertToCSV(data) {
         "Registration ID", "Name", "Email", "Year", "Department",
         "Institute", "Food Preference", "Entropy", "Inquisition",
         "Overflow", "Predicta", "Recursion", "Re-Presentation",
-        "Crack the Grid", "Entropy File", "Recursion File",
-        "Re-Presentation File", "Payment File", "Status", "Submitted"
+        "Crack the Grid", "Entropy File", "Entropy Description",
+        "Recursion File", "Re-Presentation File", "Payment File",
+        "Payment Reference No.", "Status", "Submitted"
     ];
 
     const rows = data.map(p => {
@@ -445,9 +451,11 @@ function convertToCSV(data) {
             p.event_representation ? "Yes" : "No",
             p.event_sudoku ? "Yes" : "No",
             p.file_entropy || "—",
+            p.entropy_description || "—",
             p.file_recursion || "—",
             p.file_representation || "—",
             p.file_payment || "—",
+            p.payment_reference_no || "—",
             p.status || "—",
             p.timestamp ? new Date(p.timestamp).toLocaleString() : "—"
         ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(","); // Escape quotes to prevent CSV breakage
