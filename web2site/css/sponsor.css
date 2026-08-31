@@ -1,8 +1,5 @@
 /* --- Base Variables (assuming these match your main styles) --- */
 
-
-
-
 /* 1. Make the header solid and keep it on top of everything */
 .site-header {
     background-color: #f4f0e9 !important; /* Forces the cream background */
@@ -99,13 +96,20 @@
 
 .poster-placeholder {
     width: 100%;
-    max-width: 600px;
-    aspect-ratio: 4/5;
-    background: #eae6db; /* Slightly darker cream for placeholder */
+    max-width: 900px; /* INCREASED SIZE */
+    aspect-ratio: auto; /* HORIZONTAL LAYOUT */
+    background: transparent; /* REMOVED GRAY BOX */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 32px;
+}
+
+/* Ensure the Mira Basu image scales beautifully inside its new wider container */
+.poster-placeholder img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 .sponsor-name {
@@ -134,7 +138,7 @@
 .logo-placeholder {
     width: 100%;
     aspect-ratio: 3/2;
-    background: #eae6db;
+    background: transparent; /* REMOVED GRAY BOX */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,6 +146,13 @@
     font-weight: bold;
     letter-spacing: 1px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* EXTEND LOGOS: Force the images to stretch and fill the flex container */
+.logo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .logo-placeholder:hover {
