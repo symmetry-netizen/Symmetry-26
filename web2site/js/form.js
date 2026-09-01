@@ -760,6 +760,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                // Description is only required when the Entropy file is being
+                // uploaded in THIS submission. If the user is uploading a
+                // different pending event's file instead, they can skip
+                // Entropy (file + description) entirely and come back later.
                 if (filesToUpload.Entropy) {
                     const pendingWords = countWords(entropyDescription.value);
                     if (!entropyDescription.value.trim()) {
@@ -1012,12 +1016,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             /* =============================================
                7. VALIDATE ENTROPY DESCRIPTION
+
+               Both the Entropy file and its description are
+               OPTIONAL on first-time registration — a user can
+               skip both and come back later (Entropy will be
+               added to their "pending uploads" list).
+
+               However, if they choose to attach the Entropy
+               file NOW, the description becomes mandatory —
+               they can't upload the file without describing it.
             ============================================= */
             if (selectedEvents.includes("Entropy")) {
+                const hasEntropyFile = entropyFile.files && entropyFile.files.length > 0;
                 const entropyWords = countWords(entropyDescription.value);
 
-                if (!entropyDescription.value.trim()) {
-                    alert("Please describe your Entropy photograph before submitting.");
+                if (hasEntropyFile && !entropyDescription.value.trim()) {
+                    alert("Please describe your Entropy photograph before submitting your file.");
                     entropyDescription.focus();
                     entropyDescription.scrollIntoView({ behavior: "smooth", block: "center" });
                     return;
