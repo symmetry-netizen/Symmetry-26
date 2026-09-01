@@ -9,7 +9,7 @@ const UPLOADS_OPEN = true;
    STRICT VALIDATION + JSON OUTPUT
 ========================================================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, doc, updateDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAiq2xnBHR5oRvRgTxVCuA1J2aJYS7nwrM",
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.getElementById("entropySubmission")) document.getElementById("entropySubmission").style.display = "none";
             if (document.getElementById("recursionSubmission")) document.getElementById("recursionSubmission").style.display = "none";
             if (document.getElementById("representationSubmission")) document.getElementById("representationSubmission").style.display = "none";
+            if (document.getElementById("inquisitionSubmission")) document.getElementById("inquisitionSubmission").style.display = "none";
             
         } else {
             // SCENARIO 2: They have pending uploads
@@ -114,6 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const representationSubmission =
         document.getElementById("representationSubmission");
 
+    const inquisitionSubmission =
+        document.getElementById("inquisitionSubmission");
+
 
     /* =====================================================
        FILE INPUTS
@@ -142,6 +146,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const paymentReference =
         document.getElementById("paymentReference");
+
+    /* =====================================================
+       INQUISITION TEAM SETUP
+    ===================================================== */
+
+    const inquisitionModeRadios =
+        document.querySelectorAll('input[name="inquisitionMode"]');
+
+    const inquisitionModeError =
+        document.getElementById("inquisitionModeError");
+
+    const inquisitionJoinFields =
+        document.getElementById("inquisitionJoinFields");
+
+    const inquisitionCreateFields =
+        document.getElementById("inquisitionCreateFields");
+
+    const inquisitionGroupName =
+        document.getElementById("inquisitionGroupName");
+
+    const inquisitionGroupId =
+        document.getElementById("inquisitionGroupId");
+
+    const inquisitionNewGroupName =
+        document.getElementById("inquisitionNewGroupName");
 
     /* =====================================================
        FILE NAME DISPLAY
@@ -226,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
         entropySubmission.classList.remove("visible");
         recursionSubmission.classList.remove("visible");
         representationSubmission.classList.remove("visible");
+        inquisitionSubmission.classList.remove("visible");
 
         let requiresSubmission = false;
 
@@ -240,6 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (selectedEvents.includes("Re-Presentation")) {
             representationSubmission.classList.add("visible");
+            requiresSubmission = true;
+        }
+        if (selectedEvents.includes("Inquisition")) {
+            inquisitionSubmission.classList.add("visible");
             requiresSubmission = true;
         }
 
@@ -326,6 +360,26 @@ document.addEventListener("DOMContentLoaded", () => {
         entropyDescription.addEventListener("input", updateEntropyWordCount);
         updateEntropyWordCount();
     }
+
+    /* =====================================================
+       INQUISITION MODE SWITCH (solo / join / create)
+    ===================================================== */
+
+    inquisitionModeRadios.forEach(radio => {
+        radio.addEventListener("change", () => {
+
+            inquisitionJoinFields.style.display = "none";
+            inquisitionCreateFields.style.display = "none";
+            inquisitionModeError.classList.remove("show");
+
+            if (radio.value === "join" && radio.checked) {
+                inquisitionJoinFields.style.display = "grid";
+            }
+            if (radio.value === "create" && radio.checked) {
+                inquisitionCreateFields.style.display = "grid";
+            }
+        });
+    });
 
     /* =====================================================
        FILE EXTENSION VALIDATION
@@ -424,6 +478,141 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error querying Firestore:", error);
             return false; 
         }
+    }
+
+    /* =====================================================
+       INQUISITION — JOIN AN EXISTING GROUP
+
+       Looks the group up by group_id first (so we can tell the
+       user precisely whether the ID or the name was the problem),
+       then atomically claims the first open player slot via a
+       Firestore transaction so two simultaneous joins can't
+       collide on the same slot.
+    ===================================================== */
+
+    async function joinInquisitionGroup(groupIdInput, groupNameInput, playerName) {
+
+        const inquisitionRef = collection(db, "inquisition");
+        const idQuery = query(inquisitionRef, where("group_id", "==", groupIdInput));
+        const idSnapshot = await getDocs(idQuery);
+
+        if (idSnapshot.empty) {
+            return {
+                success: false,
+                message: "No Inquisition group was found with that Group ID. Please double-check the ID and try again."
+            };
+        }
+
+        const groupDocSnap = idSnapshot.docs[0];
+        const groupData = groupDocSnap.data();
+
+        // Case-sensitive exact match, as specified.
+        if (groupData.group_name !== groupNameInput) {
+            return {
+                success: false,
+                message: "The Group ID is valid, but the Group Name doesn't match exactly (it's case-sensitive). Please check the name and try again."
+            };
+        }
+
+        const slotOrder = ["player2", "player3", "player4"];
+        const openSlot = slotOrder.find(slot => !groupData[slot]);
+
+        if (!openSlot) {
+            return {
+                success: false,
+                message: `The group "${groupData.group_name}" is already full (4/4 players). Please choose a different option.`
+            };
+        }
+
+        const groupDocRef = doc(db, "inquisition", groupDocSnap.id);
+
+        try {
+            await runTransaction(db, async (transaction) => {
+                const freshSnap = await transaction.get(groupDocRef);
+                const freshData = freshSnap.data();
+
+                if (freshData[openSlot]) {
+                    throw new Error("SLOT_TAKEN");
+                }
+
+                transaction.update(groupDocRef, { [openSlot]: playerName });
+            });
+        } catch (err) {
+            if (err.message === "SLOT_TAKEN") {
+                return {
+                    success: false,
+                    message: "That open slot was just claimed by someone else. Please try again — there may still be another open slot."
+                };
+            }
+            throw err;
+        }
+
+        const finalPlayers = {
+            player1: groupData.player1 || "",
+            player2: groupData.player2 || "",
+            player3: groupData.player3 || "",
+            player4: groupData.player4 || ""
+        };
+        finalPlayers[openSlot] = playerName;
+
+        return {
+            success: true,
+            group_id: groupData.group_id,
+            group_name: groupData.group_name,
+            player_slot: openSlot,
+            players: finalPlayers
+        };
+    }
+
+    /* =====================================================
+       INQUISITION — CREATE A NEW GROUP
+
+       Rejects the name if it's already taken, otherwise mints a
+       unique group ID (same timestamp + random-suffix pattern as
+       the main registration ID) and creates the document with
+       the creator seated as player1.
+    ===================================================== */
+
+    async function createInquisitionGroup(newGroupNameInput, playerName) {
+
+        const inquisitionRef = collection(db, "inquisition");
+        const nameQuery = query(inquisitionRef, where("group_name", "==", newGroupNameInput));
+        const nameSnapshot = await getDocs(nameQuery);
+
+        if (!nameSnapshot.empty) {
+            return {
+                success: false,
+                message: `A group named "${newGroupNameInput}" already exists. Please choose a different group name.`
+            };
+        }
+
+        const groupId =
+            "INQ-" +
+            Date.now().toString(36).toUpperCase() +
+            "-" +
+            Math.random().toString(36).substring(2, 6).toUpperCase();
+
+        await addDoc(inquisitionRef, {
+            group_id: groupId,
+            group_name: newGroupNameInput,
+            player1: playerName,
+            player2: "",
+            player3: "",
+            player4: ""
+        });
+
+        return {
+            success: true,
+            group_id: groupId,
+            group_name: newGroupNameInput,
+            player_slot: "player1",
+            players: {
+                player1: playerName,
+                player2: "",
+                player3: "",
+                player4: ""
+            }
+        };
     }
 
     /* =====================================================
@@ -857,6 +1046,90 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /* =============================================
+               8.5 INQUISITION — MODE VALIDATION + GROUP
+                   JOIN / CREATE (Firestore)
+            ============================================= */
+
+            let inquisitionResult = null;
+
+            if (selectedEvents.includes("Inquisition")) {
+
+                const checkedMode = document.querySelector('input[name="inquisitionMode"]:checked');
+
+                if (!checkedMode) {
+                    inquisitionModeError.classList.add("show");
+                    inquisitionSubmission.scrollIntoView({ behavior: "smooth", block: "center" });
+                    return;
+                }
+
+                const mode = checkedMode.value;
+
+                if (mode === "solo") {
+
+                    inquisitionResult = { success: true, type: "Solo" };
+
+                } else if (mode === "join") {
+
+                    const groupNameValue = inquisitionGroupName.value.trim();
+                    const groupIdValue = inquisitionGroupId.value.trim();
+
+                    if (!groupNameValue || !groupIdValue) {
+                        alert("Please enter both the group name and the group ID to join an existing Inquisition group.");
+                        inquisitionGroupName.focus();
+                        inquisitionJoinFields.scrollIntoView({ behavior: "smooth", block: "center" });
+                        return;
+                    }
+
+                    setSubmitLoading(true, "Checking group details...");
+
+                    let joinOutcome;
+                    try {
+                        joinOutcome = await joinInquisitionGroup(groupIdValue, groupNameValue, name);
+                    } catch (err) {
+                        console.error("Inquisition join failed:", err);
+                        alert("We couldn't verify the group details right now. Please check your connection and try again.");
+                        return;
+                    }
+
+                    if (!joinOutcome.success) {
+                        alert(joinOutcome.message);
+                        return;
+                    }
+
+                    inquisitionResult = { success: true, type: "Group", ...joinOutcome };
+
+                } else if (mode === "create") {
+
+                    const newGroupNameValue = inquisitionNewGroupName.value.trim();
+
+                    if (!newGroupNameValue) {
+                        alert("Please choose a name for your new Inquisition group.");
+                        inquisitionNewGroupName.focus();
+                        inquisitionCreateFields.scrollIntoView({ behavior: "smooth", block: "center" });
+                        return;
+                    }
+
+                    setSubmitLoading(true, "Creating your group...");
+
+                    let createOutcome;
+                    try {
+                        createOutcome = await createInquisitionGroup(newGroupNameValue, name);
+                    } catch (err) {
+                        console.error("Inquisition group creation failed:", err);
+                        alert("We couldn't create your group right now. Please check your connection and try again.");
+                        return;
+                    }
+
+                    if (!createOutcome.success) {
+                        alert(createOutcome.message);
+                        return;
+                    }
+
+                    inquisitionResult = { success: true, type: "Group", ...createOutcome };
+                }
+            }
+
+            /* =============================================
                9. CREATE UNIQUE REGISTRATION ID
             ============================================= */
 
@@ -961,6 +1234,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 entropy_description: selectedEvents.includes("Entropy") ? entropyDescription.value.trim() : "",
                 payment_reference_no: paymentReferenceValue,
 
+                // Inquisition team fields (blank unless Inquisition is selected)
+                inquisition_type: inquisitionResult ? inquisitionResult.type : "",
+                inquisition_group: (inquisitionResult && inquisitionResult.type === "Group") ? inquisitionResult.group_name : "",
+
+                // Attendance — always blank at registration; filled later
+                // via QR-code scan at the physical event (not active yet).
+                attendance: "",
+
                 // Event Booleans (True/False)
                 event_entropy: selectedEvents.includes("Entropy"),
                 event_recursion: selectedEvents.includes("Recursion"),
@@ -1030,6 +1311,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         events: !isReturningUser ? selectedEvents : undefined,
                         entropy_description: !isReturningUser ? (registrationData.entropy_description || "") : undefined,
                         payment_reference_no: !isReturningUser ? paymentReferenceValue : undefined,
+                        inquisition: !isReturningUser ? inquisitionResult : undefined,
                         submissions: {
                             entropy: entropyData,
                             recursion: recursionData,
