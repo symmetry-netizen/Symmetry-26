@@ -266,6 +266,10 @@ function renderAnalytics() {
    PARTICIPANT FILTERING LOGIC
 ========================================================= */
 
+/* =========================================================
+   PARTICIPANT FILTERING LOGIC
+========================================================= */
+
 function getFilteredParticipants() {
     const search = document
         .getElementById("participantSearch")
@@ -281,15 +285,19 @@ function getFilteredParticipants() {
             selectedEvents.length === 0 ||
             selectedEvents.every(key => participant.events.includes(key));
 
+        // Checks if the search string exists in ANY of the participant's data fields
         const matchesSearch =
             !search ||
-            participant.name.toLowerCase().includes(search);
+            Object.values(participant).some(val => 
+                val !== null && 
+                val !== undefined && 
+                String(val).toLowerCase().includes(search)
+            );
 
         return matchesEvents && matchesSearch;
 
     });
 }
-
 
 
 /* =========================================================
