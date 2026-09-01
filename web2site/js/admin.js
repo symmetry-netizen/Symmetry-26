@@ -657,7 +657,7 @@ async function sendReply(event) {
         };
 
         // 4. Send the email using Google Apps Script
-        const scriptURL = "https://script.google.com/macros/s/AKfycbzPhhcwPxg3Ge615xiFT75CpZv5ojJy7Z1QpUpajZ8c1OkAPY1v4yvf-OwlA95eKgQe/exec";
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxYmbQK9vpISjsBkN4KhMzSBM1Ob2d5pPS3D_Lm78KvTNwk2nxX-Y41gnT7YOi24uAjQQ/exec";
 
         await fetch(scriptURL, {
             method: "POST",
