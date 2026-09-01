@@ -142,6 +142,11 @@ function mapParticipant(docSnap) {
         entropy_description: data.entropy_description || "",
         payment_reference_no: data.payment_reference_no || "",
 
+        inquisition_type: data.inquisition_type || "",
+        inquisition_group: data.inquisition_group || "",
+
+        attendance: data.attendance || "",
+
         status: data.status || "",
         timestamp: data.timestamp || null,
 
@@ -335,6 +340,8 @@ function renderParticipants() {
             <td title="${escapeHTML(participant.entropy_description)}">${escapeHTML(participant.entropy_description) || "—"}</td>
             <td>${fileLink(participant.file_recursion)}</td>
             <td>${fileLink(participant.file_representation)}</td>
+            <td>${escapeHTML(participant.inquisition_type) || "—"}</td>
+            <td>${escapeHTML(participant.inquisition_group) || "—"}</td>
             <td class="${participant.file_payment ? "payment-paid" : "payment-pending"}">
                 ${
                     participant.file_payment
@@ -344,6 +351,7 @@ function renderParticipants() {
             </td>
             <td>${escapeHTML(participant.payment_reference_no) || "—"}</td>
             <td>${escapeHTML(participant.status) || "—"}</td>
+            <td>${escapeHTML(participant.attendance) || "—"}</td>
             <td>${escapeHTML(submitted)}</td>
         `;
 
@@ -429,8 +437,9 @@ function convertToCSV(data) {
         "Institute", "Food Preference", "Entropy", "Inquisition",
         "Overflow", "Predicta", "Recursion", "Re-Presentation",
         "Crack the Grid", "Entropy File", "Entropy Description",
-        "Recursion File", "Re-Presentation File", "Payment File",
-        "Payment Reference No.", "Status", "Submitted"
+        "Recursion File", "Re-Presentation File", "Inquisition-Type",
+        "Inquisition-Group", "Payment File", "Payment Reference No.",
+        "Status", "Attendance", "Submitted"
     ];
 
     const rows = data.map(p => {
@@ -454,9 +463,12 @@ function convertToCSV(data) {
             p.entropy_description || "—",
             p.file_recursion || "—",
             p.file_representation || "—",
+            p.inquisition_type || "—",
+            p.inquisition_group || "—",
             p.file_payment || "—",
             p.payment_reference_no || "—",
             p.status || "—",
+            p.attendance || "—",
             p.timestamp ? new Date(p.timestamp).toLocaleString() : "—"
         ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(","); // Escape quotes to prevent CSV breakage
     });
