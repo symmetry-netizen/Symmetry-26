@@ -602,6 +602,95 @@
                 </div>
             </section>
 
+            <!-- INQUISITION TEAM SETUP -->
+            <section class="form-section submission-section" id="inquisitionSubmission">
+                <div class="section-heading">
+                    <span class="section-number">05</span>
+                    <div>
+                        <h2>Inquisition: Team Setup</h2>
+                        <p>Inquisition can be played solo or as a team of up to 4. Choose how you'd like to participate.</p>
+                    </div>
+                </div>
+
+                <div class="radio-group" style="flex-direction: column; align-items: stretch; gap: 14px;">
+
+                    <label class="radio-card">
+                        <input type="radio" name="inquisitionMode" id="inquisitionModeSolo" value="solo">
+                        <span class="radio-custom"></span>
+                        <span>Play Solo</span>
+                    </label>
+
+                    <div>
+                        <label class="radio-card">
+                            <input type="radio" name="inquisitionMode" id="inquisitionModeJoin" value="join">
+                            <span class="radio-custom"></span>
+                            <span>Join an Existing Group</span>
+                        </label>
+                        <p class="file-name" style="margin: 6px 0 0 4px;">* Requires the exact group name and group ID given to you by whoever created the group.</p>
+                    </div>
+
+                    <div>
+                        <label class="radio-card">
+                            <input type="radio" name="inquisitionMode" id="inquisitionModeCreate" value="create">
+                            <span class="radio-custom"></span>
+                            <span>Create a New Group</span>
+                        </label>
+                        <p class="file-name" style="margin: 6px 0 0 4px;">* A new group will be created under Inquisition and can hold up to 4 players.</p>
+                    </div>
+
+                </div>
+
+                <p id="inquisitionModeError" class="error-message">Please choose how you'd like to participate in Inquisition.</p>
+
+                <!-- JOIN GROUP FIELDS -->
+                <div class="form-grid" id="inquisitionJoinFields" style="display: none; margin-top: 20px;">
+
+                    <div class="form-group full-width">
+                        <label for="inquisitionGroupName">
+                            Group Name <span>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="inquisitionGroupName"
+                            name="inquisitionGroupName"
+                            placeholder="Exact group name (case-sensitive)"
+                        >
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="inquisitionGroupId">
+                            Group ID <span>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="inquisitionGroupId"
+                            name="inquisitionGroupId"
+                            placeholder="Group ID shared with you"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- CREATE GROUP FIELDS -->
+                <div class="form-grid" id="inquisitionCreateFields" style="display: none; margin-top: 20px;">
+
+                    <div class="form-group full-width">
+                        <label for="inquisitionNewGroupName">
+                            Group Name <span>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="inquisitionNewGroupName"
+                            name="inquisitionNewGroupName"
+                            placeholder="Choose a name for your group"
+                        >
+                        <p class="file-name">* A unique group ID will be generated and sent to your confirmation email. Share this ID and the exact group name with your teammates — they'll need both to join.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
             <!-- RE-PRESENTATION UPLOAD -->
             <section class="form-section submission-section" id="representationSubmission">
                 <div class="section-heading">
