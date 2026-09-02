@@ -962,24 +962,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
 
-            if (
-                selectedEvents.length === 0
-            ) {
-
-                eventError.classList.add("show");
-
-
-                document
-                    .querySelector(".events-grid")
-                    .scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
-
-
-                return;
-
-            }
+            // NOTE: Event selection is now OPTIONAL — a participant can
+            // register with zero events. Only Payment Verification below
+            // is mandatory. The old "select at least one event" block has
+            // been intentionally removed.
+            eventError.classList.remove("show");
 
 
             /* =============================================
