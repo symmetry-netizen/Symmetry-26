@@ -1,7 +1,7 @@
 // ==========================================
 // DEADLINE CONTROLS (KILL SWITCHES)
 // ==========================================
-const TEMPORARILY_DOWN = true; // NEW SWITCH: Set to true to show 7:30 PM down message
+const TEMPORARILY_DOWN = false; // NEW SWITCH: Set to true to show 7:30 PM down message
 const REGISTRATION_OPEN = true; 
 const UPLOADS_OPEN = true;
 
