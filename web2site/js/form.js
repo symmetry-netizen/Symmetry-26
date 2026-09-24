@@ -1,7 +1,7 @@
 // ==========================================
 // DEADLINE CONTROLS (KILL SWITCHES)
 // ==========================================
-const REGISTRATION_OPEN = false; 
+const REGISTRATION_OPEN = true; 
 const UPLOADS_OPEN = false;
 /* =========================================================
    SYMMETRY 2026
